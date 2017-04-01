@@ -79,7 +79,7 @@ public class WelcomeFragment extends android.support.v4.app.Fragment {
                 SharedPreferences.Editor editor=preferencesEmail.edit();
                 editor.putBoolean("login",false);
                 editor.apply();
-                SigninFragment signinFragment=SigninFragment.newInstance("","");
+                SigninFragment signinFragment=SigninFragment.newInstance("");
                 MainActivity mainActivity= (MainActivity) getActivity();
                 mainActivity.addFragment(R.id.fragment_container,signinFragment);
 

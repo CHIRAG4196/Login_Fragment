@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SigninFragment signinFragment = SigninFragment.newInstance("", "");
+        SigninFragment signinFragment = SigninFragment.newInstance("");
         addFragment(R.id.fragment_container, signinFragment);
 
     }

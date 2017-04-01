@@ -4,6 +4,7 @@ package com.example.utsav.login_fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.annotation.NonNull;
@@ -18,20 +19,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class SigninFragment extends android.support.v4.app.Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String putAll= "photo";
     private AppCompatButton btnSignin, btnSignup, btnReset, btnCancel;
     private AppCompatEditText etSignin, etPassword, etForgotPassword;
     private AppCompatTextView tvForgot;
     // TODO: Rename and change types of parameters
     private String mParam1;
-    private String mParam2;
+    private String Imageurl;
+
+
     private SharedPreferences preferences;
-    private int counter;
+    private CircleImageView ivProfile;
 
 
     public SigninFragment() {
@@ -43,25 +49,28 @@ public class SigninFragment extends android.support.v4.app.Fragment {
      * this fragment using the provided parameters.
      *
      * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment SigninFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static SigninFragment newInstance(String param1, String param2) {
+    public static SigninFragment newInstance(String param1) {
         SigninFragment fragment = new SigninFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+
         fragment.setArguments(args);
         return fragment;
     }
+public void photo(String s){
+    Imageurl=s;
+}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+
+
         }
     }
 
@@ -84,12 +93,20 @@ public class SigninFragment extends android.support.v4.app.Fragment {
             MainActivity mainActivity = (MainActivity) getActivity();
             mainActivity.addFragment(R.id.fragment_container, welcomeFragment);
         } else {
+            ivProfile= (CircleImageView) view.findViewById(R.id.profile_image_signin);
             btnSignin = (AppCompatButton) view.findViewById(R.id.bt_signin);
             btnSignup = (AppCompatButton) view.findViewById(R.id.bt_signup);
             etSignin = (AppCompatEditText) view.findViewById(R.id.et_signin);
             etPassword = (AppCompatEditText) view.findViewById(R.id.et_signup);
             tvForgot = (AppCompatTextView) view.findViewById(R.id.tv_forgot_pwd);
             listners();
+            Toast.makeText(getActivity(), mParam1, Toast.LENGTH_SHORT).show();
+            if (Imageurl!=null){
+                ivProfile.setImageURI(Uri.parse(Imageurl));
+            }else {
+
+                ivProfile.setImageResource(R.drawable.noprofile);
+            }
             tvForgot.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

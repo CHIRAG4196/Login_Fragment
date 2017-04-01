@@ -36,6 +36,7 @@ public class SignupFragment extends android.support.v4.app.Fragment {
     private AppCompatEditText etEmail, etPassword, etConfirmPassword;
     private AppCompatButton btnSignup;
     private CircleImageView imageView;
+    private Uri camera,gallary;
 
 
     private static final String TAG = "SignupActivity";
@@ -100,13 +101,16 @@ public class SignupFragment extends android.support.v4.app.Fragment {
             @Override
             public void onClick(View v) {
                 registerUser();
+                SigninFragment fragment=new SigninFragment();
+                fragment.photo(camera.toString());
             }
         });
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 select();
-                // capturePhoto("utsav");
+
+
             }
         });
 
@@ -120,9 +124,11 @@ public class SignupFragment extends android.support.v4.app.Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (utsav[which].equals("Take Photo")) {
-                    capturePhoto("utsav");
+                    capturePhoto();
+
                 } else if (utsav[which].equals("Select From Gallary")) {
                     selectImage();
+                  //  SigninFragment.newInstance(gallary.getPath());
                 } else if (utsav[which].equals("Cancel")) {
                     dialog.dismiss();
                 }
@@ -140,7 +146,7 @@ public class SignupFragment extends android.support.v4.app.Fragment {
         startActivityForResult(intent, REQUEST_IMAGE_OPEN);
     }
 
-    public void capturePhoto(String targetFilename) {
+    public void capturePhoto() {
 
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
@@ -155,13 +161,16 @@ public class SignupFragment extends android.support.v4.app.Fragment {
 
         if (requestCode == REQUEST_IMAGE_OPEN && resultCode == RESULT_OK) {
 
-            Uri fullPhotoUri = data.getData();
-            imageView.setImageURI(fullPhotoUri);
+             gallary = data.getData();
+            imageView.setImageURI(gallary);
+
             // Do work with full size photo saved at fullPhotoUri
 
         } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Uri mLocationForPhotos = data.getData();
-            imageView.setImageURI(mLocationForPhotos);
+             camera = data.getData();
+
+            imageView.setImageURI(camera);
+            Toast.makeText(getActivity(), ""+camera, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -193,7 +202,7 @@ public class SignupFragment extends android.support.v4.app.Fragment {
         }
         if (checkPassword() == true) {
             Toast.makeText(getActivity(), "Sucess", Toast.LENGTH_SHORT).show();
-            SigninFragment signinFragment = SigninFragment.newInstance("", "");
+            SigninFragment signinFragment = SigninFragment.newInstance("");
             MainActivity mainActivity = (MainActivity) getActivity();
             mainActivity.addFragment(R.id.fragment_container, signinFragment);
 
