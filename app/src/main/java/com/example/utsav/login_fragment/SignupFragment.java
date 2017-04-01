@@ -129,7 +129,6 @@ public class SignupFragment extends android.support.v4.app.Fragment {
             }
         })
                 .setCancelable(false)
-                .setIcon(R.mipmap.ic_launcher)
                 .show();
     }
 
